@@ -31,6 +31,7 @@ print_sudoku_text_rows(Output):-
 % Definir el manejador para la ruta raíz "/"
 :- http_handler(root(.), http_index_handler, []).
 :- http_handler(root(sudoku), sudoku_handler, []).
+:- http_handler(root(sudoku/resolve), sudoku_resolve_handler, []).
 
 % Manejador para la ruta raíz "/"
 http_index_handler(_Request) :-
@@ -227,6 +228,14 @@ sudoku_handler(_Request) :-
                 []),
             button([onclick="console.log('Hola')"], "Check"),
             button([onclick='window.location.href="/"'], 'Regresar')
+        ]).
+
+sudoku_resolve_handler(_Request) :-
+    reply_html_page(
+        title('PROLOGKU'),
+        [ h1('PROLOGKU'),
+            p('Resolviendo sudoku...'),
+            button([onclick='window.location.href="/sudoku"'], 'Regresar')
         ]).
 
 % Predicado principal para iniciar el servidor
